@@ -1,0 +1,39 @@
+#lang neoglot
+category bilab { p b f v pf }
+category alv { t d l lh s z tlh ts}
+category velar { k g }
+ 
+category stop { p b t d k g }
+category lat { l lh }
+category fric { f v s z lh }
+category affr { pf tlh ts }
+ 
+category voice { b v d z g }
+category unvoice { p f t s k }
+ 
+category son { i u o a r }
+category consonant { p b t d k g l lh f v s z pf tlh ts }
+category full { $son + $consonant }
+ 
+category onset { $consonant - $affr }
+ 
+syll { $onset? $onset? $son $consonant? }
+ 
+illegal {
+  { $son $son $son,
+      always }
+  { $son $bilab@b $son,
+      $b != f }
+  { $son@a $consonant* $son@b,
+      ($a = $b) & ($a = r) }
+}
+ 
+mutate {
+  { $unvoice $son $voice@a,
+      always,
+      $a:($voice -> $unvoice)}
+  { $voice $son $unvoice@a,
+      always,
+      $a:($unvoice -> $voice)}
+}
+
