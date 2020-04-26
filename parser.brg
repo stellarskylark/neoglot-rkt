@@ -1,0 +1,11 @@
+#lang brag
+ng-program    : (block | named-block)*
+block         : UNNAMED-BLOCK wrap
+named-block   : NAMED-BLOCK ID wrap
+wrap          : /"{" 
+                (expr (/"," expr)* | wrap+)
+                /"}"
+expr          : wrap+ | (arg | infix-op-exp | suffix-op-exp)+
+arg           : /"(" expr /")" | "$"? ID
+infix-op-exp  : arg INFIX-OP arg
+suffix-op-exp : arg SUFFIX-OP
