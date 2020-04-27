@@ -1,8 +1,11 @@
 #lang brag
-ng-program    : (block | named-block)*
-block         : UNNAMED-BLOCK wrap
-named-block   : NAMED-BLOCK ID wrap
-wrap          : /"{" 
+ng-program    : (cat-block | ill-block | syll-block | mut-block)*
+cat-block     : /CAT-KEY ID wrap
+ill-block     : /ILL-KEY multi-wrap
+syll-block    : /SYLL-KEY wrap
+mut-block     : /MUT-KEY multi-wrap
+wrap          : /"{" expr (/"," expr)* /"}"
+multi-wrap    : /"{" 
                 (expr (/"," expr)* | wrap+)
                 /"}"
 expr          : (arg | infix-op-exp | suffix-op-exp)+

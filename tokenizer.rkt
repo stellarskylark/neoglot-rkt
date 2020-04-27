@@ -28,15 +28,29 @@
                    #:position (pos lexeme-start)
                    #:span (- (pos lexeme-end)
                              (pos lexeme-start)))]
-           [(:or "ill" "illegal" "syll" "syllable" "mut" "mutate")
-            (token 'UNNAMED-BLOCK lexeme
+           [(:or "ill" "illegal")
+            (token 'ILL-KEY lexeme
+                   #:line (line lexeme-start)
+                   #:column (col lexeme-start)
+                   #:position (pos lexeme-start)
+                   #:span (- (pos lexeme-end)
+                             (pos lexeme-start)))]
+           [(:or "syll" "syllable")
+            (token 'SYLL-KEY lexeme
+                   #:line (line lexeme-start)
+                   #:column (col lexeme-start)
+                   #:position (pos lexeme-start)
+                   #:span (- (pos lexeme-end)
+                             (pos lexeme-start)))]
+           [(:or "mut" "mutate")
+            (token 'MUT-KEY lexeme
                    #:line (line lexeme-start)
                    #:column (col lexeme-start)
                    #:position (pos lexeme-start)
                    #:span (- (pos lexeme-end)
                              (pos lexeme-start)))]
            [(:or "cat" "category")
-            (token 'NAMED-BLOCK lexeme
+            (token 'CAT-KEY lexeme
                    #:line (line lexeme-start)
                    #:column (col lexeme-start)
                    #:position (pos lexeme-start)
@@ -48,7 +62,13 @@
                    #:column (col lexeme-start)
                    #:position (pos lexeme-start)
                    #:span (- (pos lexeme-end)
-                             (pos lexeme-start)))]))
+                             (pos lexeme-start)))]
+           [any-char
+            (raise-syntax-error 'syntax-error
+              (format "unexpected character: '~a' (~a:~a)"
+                      lexeme
+                      (line lexeme-start)
+                      (col lexeme-start)))]))
     (neoglot-lexer port))
   next-token)
 (provide make-tokenizer)
